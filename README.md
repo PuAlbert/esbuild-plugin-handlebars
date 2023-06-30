@@ -1,5 +1,7 @@
 # esbuild-plugin-handlebars
 
+# fix  TypeError: Cannot read properties of undefined (reading 'call') issue
+
 > an [esbuild](https://github.com/evanw/esbuild) plugin to handle ... handlebars!
 
 ## Installation

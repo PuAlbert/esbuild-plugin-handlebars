@@ -6,10 +6,16 @@ let foundHelpers: string[] = [];
 const fileCache = new Map();
 // @ts-ignore
 class ESBuildHandlebarsJSCompiler extends handlebars.JavaScriptCompiler {
-  // @ts-ignore
-  nameLookup(parent, name: string, type) {
-    if (type === "helper" && !foundHelpers.includes(name)) {
-      foundHelpers.push(name);
+  constructor() {
+    super(...arguments);
+  }
+  public compiler: typeof ESBuildHandlebarsJSCompiler = ESBuildHandlebarsJSCompiler;
+
+  public nameLookup(parent: string, name: string, type?: string): string {
+    if (type === "helper") {
+      if (!foundHelpers.includes(name)) {
+        foundHelpers.push(name);
+      }
     }
     return super.nameLookup(parent, name, type);
   }
@@ -63,7 +69,13 @@ function hbs(options: { additionalHelpers: any; additionalPartials: any; precomp
           foundHelpers = [];
           const template = hb.precompile(source, compileOptions);
           const foundAndMatchedHelpers = foundHelpers.filter((helper) => additionalHelpers[helper] !== undefined);
-          const contents = ["import * as Handlebars from 'handlebars/runtime';", ...foundAndMatchedHelpers.map((helper) => `import ${helper} from '${additionalHelpers[helper]}';`), ...Object.entries(additionalPartials).map(([name, path]) => `import ${name} from '${path}';`), `Handlebars.registerHelper({${foundAndMatchedHelpers.join()}});`, `Handlebars.registerPartial({${Object.keys(additionalPartials).join()}});`, `export default Handlebars.template(${template});`].join("\n");
+          const contents = [
+            "import * as Handlebars from 'handlebars/runtime';",
+            ...foundAndMatchedHelpers.map((helper) => `import ${helper} from '${additionalHelpers[helper]}';`),
+            ...Object.entries(additionalPartials).map(([name, path]) => `import ${name} from '${path}';`),
+            `Handlebars.registerHelper({${foundAndMatchedHelpers.join()}});`,
+            `Handlebars.registerPartial({${Object.keys(additionalPartials).join()}});`,
+            `export default Handlebars.template(${template});`].join("\n");
           return { contents };
         } catch (err: any) {
           const esBuildError = { text: err.message };

@@ -1,21 +1,21 @@
 {
   "name": "esbuild-plugin-handlebars",
   "description": "an esbuild plugin to handle ... handlebars!",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "main": "dist/index.js",
-  "author": "Inqnuam",
+  "author": "Albert.Pu",
   "license": "MIT",
-  "homepage": "https://github.com/inqnuam/esbuild-plugin-handlebars",
+  "homepage": "https://github.com/PuAlbert/esbuild-plugin-handlebars",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/inqnuam/esbuild-plugin-handlebars.git"
+    "url": "git+https://github.com/PuAlbert/esbuild-plugin-handlebars.git"
   },
   "dependencies": {
     "handlebars": "^4.7.7"
   },
   "devDependencies": {
     "@types/node": "^18.7.19",
-    "esbuild": "^0.16.5"
+    "esbuild": "0.18.10"
   },
   "scripts": {
     "build": "node build.js"
