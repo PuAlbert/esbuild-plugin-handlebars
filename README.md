@@ -21,7 +21,7 @@ const path = require('path');
 
 module.exports = [
     hbsPlugin({
-		filter: /\.(hbs|handlebars)$/i,
+        filter: /\.(hbs|handlebars)$/i,
         additionalHelpers: {
             equal: path.join(__dirname, '/helper/template/equal'),
         },
